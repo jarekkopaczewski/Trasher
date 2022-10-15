@@ -13,10 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
-        instance.name = validated_data.get(
-            'name', instance.name)
-        instance.latitude = validated_data.get(
-            'latitude', instance.latitude)
+        instance.name = validated_data.get('name', instance.name)
+        instance.latitude = validated_data.get('latitude', instance.latitude)
         instance.longitude = validated_data.get('longitude', instance.longitude)
         instance.score = validated_data.get('score', instance.score)
         instance.save()
