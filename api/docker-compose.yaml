@@ -44,8 +44,7 @@ services:
         - 40243:8000
       depends_on:
         - trasher_database
-
-
+      restart: always
     nginx:
         image: nginx:alpine    
         container_name: trasher_nginx

@@ -36,6 +36,7 @@ class ItemSerializer(serializers.ModelSerializer):
             category=validated_data.get('category'),
             image=validated_data.get('image'),
             likes=validated_data.get('likes'),
+            views=validated_data.get('views'),
             creation_date=validated_data.get('creation_date'),
             last_updated=validated_data.get('last_updated')
         )
@@ -51,6 +52,7 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.category = validated_data.get('category', instance.category)
         instance.image = validated_data.get('image', instance.image)
         instance.likes = validated_data.get('likes', instance.likes)
+        instance.views = validated_data.get('views', instance.views)
         instance.creation_date = validated_data.get('creation_date', instance.creation_date)
         instance.last_updated = validated_data.get('last_updated', instance.last_updated)
         instance.save()
