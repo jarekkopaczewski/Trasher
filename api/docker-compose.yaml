@@ -31,19 +31,31 @@ services:
                 ipv4_address: 10.0.0.3
         ports:
             - 30339:80
-    trasher_django_api:
-      container_name: trasher_django_api
-      build: .
-      command: python3 manage.py runserver 0.0.0.0:8000
-      volumes:
-        - .:/code
-      networks:
+    # trasher_django_api:
+    #   container_name: trasher_django_api
+    #   build: .
+    #   command: python3 manage.py runserver 0.0.0.0:8000
+    #   volumes:
+    #     - .:/code
+    #   networks:
+    #         trasher_network:
+    #             ipv4_address: 10.0.0.4
+    #   ports:
+    #     - 40243:8000
+    #   depends_on:
+    #     - trasher_database
+    nginx:
+        image: nginx:alpine    
+        container_name: trasher_nginx
+        volumes:      
+            - ./nginx:/etc/nginx/conf.d      
+            - ./trasher_api/static/images:/var/www/html/images
+        networks:
             trasher_network:
-                ipv4_address: 10.0.0.4
-      ports:
-        - 40339:8000
-      depends_on:
-        - trasher_database
+                ipv4_address: 10.0.0.4  
+        ports:      
+            - 40244:80
+        restart: always
 networks:
   trasher_network:
     driver: bridge
