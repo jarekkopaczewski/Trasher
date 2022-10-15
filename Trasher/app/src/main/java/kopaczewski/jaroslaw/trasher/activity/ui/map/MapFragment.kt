@@ -10,6 +10,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -22,12 +23,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.squareup.picasso.Picasso
 import kopaczewski.jaroslaw.trasher.R
 import kopaczewski.jaroslaw.trasher.activity.AddItemActivity
 import kopaczewski.jaroslaw.trasher.activity.DetailActivity
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.getItems
 import kopaczewski.jaroslaw.trasher.activity.data.Item
 import kopaczewski.jaroslaw.trasher.activity.helper.AnimateView.singleAnimation
+import kopaczewski.jaroslaw.trasher.activity.helper.ImagePath.getImagePath
 import kopaczewski.jaroslaw.trasher.databinding.DetailedViewBinding
 import kopaczewski.jaroslaw.trasher.databinding.FragmentMapBinding
 import kotlinx.coroutines.coroutineScope
@@ -89,6 +92,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 "Meble" -> R.drawable.furniture
                 "Ubrania" -> R.drawable.clothes
                 "Inne" -> R.drawable.trash
+                "Pojazdy" -> R.drawable.vehicle
                 else -> R.drawable.trash
             }
             val marker = mMap.addMarker(
@@ -113,6 +117,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         it.id == marker.tag
                     }.first()
 
+                    Picasso.get().load(getImagePath(item.image)).fit().into(detailedViewBinding.imageView)
                     detailedViewBinding.itemName.text = item.name
                     detailedViewBinding.categoryText.text = item.category
                     detailedViewBinding.viewsText.text = item.views.toString()
