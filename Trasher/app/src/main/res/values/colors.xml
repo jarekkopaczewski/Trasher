@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background">#303030</color>
+    <color name="foreground">#5E5E5E</color>
+    <color name="foreground_items">#4E4E4E</color>
+    <color name="background_images">#202020</color>
+    <color name="background_images2">#4A4A4A</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="imageTintColor">#F3F3F3</color>
+    <color name="reverseTintColor">#000000</color>
+    <color name="imageTintColorActive">#FFFFFF</color>
+    <color name="indicatorColor">#323232</color>
+    <color name="navigationBarColor">#2D000000</color>
+    <color name="navigationBarColorFire">#B54726</color>
+    <color name="navigationBarColorAchievment">#F19748</color>
+    <color name="navigationBarColorStar">#FFD15C</color>
+    <color name="progressColor">#DFDFDF</color>
+    <color name="progressBackgroundColor">#4B4B4B</color>
+    <color name="textColor">#D8D7D7</color>
+    <color name="textColor2">#FFFFFF</color>
+    <color name="barBackground">#9A818181</color>
+    <color name="correctAnswer">#64B646</color>
+    <color name="wrongAnswer">#C1451F</color>
+    <color name="midAnswer">#F19748</color>
 </resources>
