@@ -49,7 +49,7 @@ services:
         container_name: trasher_nginx
         volumes:      
             - ./nginx:/etc/nginx/conf.d      
-            - ./trasher_api/static/images:/var/www/html/images
+            - ./trasher_api/static/images:/var/www/html/static/images
         networks:
             trasher_network:
                 ipv4_address: 10.0.0.4  
