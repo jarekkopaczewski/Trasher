@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kopaczewski.jaroslaw.trasher.R
+import kopaczewski.jaroslaw.trasher.activity.AddItemActivity
 import kopaczewski.jaroslaw.trasher.activity.DetailActivity
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.getItems
 import kopaczewski.jaroslaw.trasher.activity.data.Item
@@ -31,6 +32,7 @@ import kopaczewski.jaroslaw.trasher.databinding.DetailedViewBinding
 import kopaczewski.jaroslaw.trasher.databinding.FragmentMapBinding
 import kotlinx.coroutines.coroutineScope
 import kotlin.concurrent.thread
+import kotlin.random.Random
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -43,6 +45,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var exitFab: FloatingActionButton
     private lateinit var detailedViewBinding: DetailedViewBinding
     private lateinit var detailButton: Button
+    private lateinit var myLocation: Location
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,12 +84,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         itemList = itemz
         itemz.forEach { item ->
             println(itemz)
+            val imageId = when(item.category){
+                "AGD" -> R.drawable.agd
+                "Meble" -> R.drawable.furniture
+                "Ubrania" -> R.drawable.clothes
+                "Inne" -> R.drawable.trash
+                else -> R.drawable.trash
+            }
             val marker = mMap.addMarker(
                 MarkerOptions()
                     .position(LatLng(item.latitude.toDouble(), item.longitude.toDouble()))
                     .title(item.name)
                     .snippet(item.category)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.trash))
+                    .icon(BitmapDescriptorFactory.fromResource(imageId))
             )
             if (marker != null) {
                 marker.tag = item.id
@@ -102,12 +112,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val item = itemList.filter {
                         it.id == marker.tag
                     }.first()
+
                     detailedViewBinding.itemName.text = item.name
                     detailedViewBinding.categoryText.text = item.category
-                    detailedViewBinding.viewsText.text = item.view.toString()
+                    detailedViewBinding.viewsText.text = item.views.toString()
                     detailedViewBinding.likeNumberText.text = item.likes.toString()
                     singleAnimation(specificationView, context, R.anim.zoomin)
                 }
+            }
+            else{
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 16f))
             }
             false
         }
@@ -120,6 +134,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 if (location != null) {
+                    myLocation = location
                     val user = LatLng(location.latitude, location.longitude)
                     val zoomLevel = 13f
                     val marker = mMap.addMarker(
@@ -135,5 +150,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     loadItems()
                 }
             }
+
+        mMap.setOnMapLongClickListener { latLng ->
+            if(myLocation != null){
+                val intent = Intent(requireActivity(), AddItemActivity::class.java)
+                intent.putExtra("latitude", myLocation.latitude)
+                intent.putExtra("longitude", myLocation.longitude)
+                startActivity(intent)
+            }
+        }
     }
 }

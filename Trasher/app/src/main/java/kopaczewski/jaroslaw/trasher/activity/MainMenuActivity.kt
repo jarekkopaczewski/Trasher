@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kopaczewski.jaroslaw.trasher.R
+import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.addItem
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.getItems
 import kopaczewski.jaroslaw.trasher.databinding.ActivityMainMenuBinding
 import kotlin.concurrent.thread
@@ -20,15 +21,6 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        thread {
-            val items = getItems()
-            println("thread response")
-            items.forEach{
-                println(it)
-            }
-        }
-
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main_menu)
         navView.setupWithNavController(navController)
