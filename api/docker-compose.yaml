@@ -1,0 +1,54 @@
+version: '3'
+services:  
+    trasher_database:    
+        image: mariadb    
+        container_name: trasher_database
+        volumes:
+            - ./data/database:/var/lib/mysql
+        environment:      
+            MYSQL_ROOT_PASSWORD: "root_ladybird"      
+            MYSQL_DATABASE: "trasher_database"      
+            MYSQL_USER: "admin"      
+            MYSQL_PASSWORD: "ladybird" #admin/django_ladybird/7ee86d3dab13b4e4da43b09af51f1c666599ce47
+        restart: always
+        networks:
+            trasher_network:
+                ipv4_address: 10.0.0.2
+        ports:
+         - 20339:3306
+    trasher_phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: trasher_phpmyadmin
+        links:
+            - trasher_database
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        restart: always
+        networks:
+            trasher_network:
+                ipv4_address: 10.0.0.3
+        ports:
+            - 30339:80
+    trasher_django_api:
+      container_name: trasher_django_api
+      build: .
+      command: python3 manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/code
+      networks:
+            trasher_network:
+                ipv4_address: 10.0.0.4
+      ports:
+        - 40339:8000
+      depends_on:
+        - trasher_database
+networks:
+  trasher_network:
+    driver: bridge
+    ipam:
+        driver: default
+        config:
+            - subnet: 10.0.0.0/8 
+    
