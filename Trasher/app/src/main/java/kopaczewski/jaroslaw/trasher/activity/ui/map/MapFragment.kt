@@ -13,9 +13,14 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kopaczewski.jaroslaw.trasher.R
+import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.getItems
+import kopaczewski.jaroslaw.trasher.activity.data.Item
 import kopaczewski.jaroslaw.trasher.databinding.FragmentMapBinding
+import kotlin.concurrent.thread
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -23,6 +28,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentMapBinding
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var itemList: ArrayList<Item>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,10 +38,38 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding = FragmentMapBinding.inflate(layoutInflater)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         val supportMapFragment =
-            childFragmentManager.findFragmentById(kopaczewski.jaroslaw.trasher.R.id.mapFragment) as SupportMapFragment
+            childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
         return binding.root
     }
+
+    private fun loadItems() {
+        var itemz = arrayListOf<Item>()
+        thread {
+            itemz = getItems()
+        }.join()
+        itemList = itemz
+        itemz.forEach { item ->
+            println(itemz)
+            val marker = mMap.addMarker(
+                MarkerOptions()
+                    .position(LatLng(item.latitude.toDouble(), item.longitude.toDouble()))
+                    .title(item.name)
+                    .snippet(item.category)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.trash))
+            )
+            if (marker != null) {
+                marker.tag = item.id
+            }
+        }
+
+        mMap.setOnMarkerClickListener { marker ->
+            println("Tag")
+            println(marker.tag)
+            false
+        }
+    }
+
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
@@ -43,9 +77,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 if (location != null) {
-                    val mLocation = LatLng(location.latitude, location.longitude)
-                    mMap.addMarker(MarkerOptions().position(mLocation).title("Marker in Sydney"))
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(mLocation))
+                    val user = LatLng(location.latitude, location.longitude)
+                    val zoomLevel = 13f
+                    mMap.addMarker(
+                        MarkerOptions()
+                            .position(user)
+                            .title("User")
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.me))
+                    )
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, zoomLevel))
+                    loadItems()
                 }
             }
     }
