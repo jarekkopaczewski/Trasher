@@ -23,7 +23,7 @@ class UserView(APIView, UpdateModelMixin, DestroyModelMixin,):
         create_serializer = UserSerializer(data=request.data)
         print(request.data)
         try:
-            same_user = User.objects.get(name=request.data.get('name').strip())
+            same_user = User.objects.get(name=request.data.get('name'))
             return Response({'errors': 'User with the same user name already exists.'}, status=400)
         except User.DoesNotExist:
             pass
