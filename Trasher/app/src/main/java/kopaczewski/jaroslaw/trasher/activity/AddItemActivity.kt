@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.cardview.widget.CardView
 import kopaczewski.jaroslaw.trasher.R
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.addItem
@@ -18,16 +19,16 @@ class AddItemActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddItemBinding
     private lateinit var nameInput: EditText
     private lateinit var categoryInput: EditText
-    private lateinit var addButton: Button
+    private lateinit var addButton: CardView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
         nameInput = binding.nameInput
         categoryInput = binding.categoryInput
-        addButton = binding.button
-        var latitude = intent.getDoubleExtra("latitude", 40.1234)
-        var longitude = intent.getDoubleExtra("longitude", 45.5678)
+        addButton = binding.addButton
+        val latitude = intent.getDoubleExtra("latitude", 40.1234)
+        val longitude = intent.getDoubleExtra("longitude", 45.5678)
 
         addButton.setOnClickListener {
             val item = ItemSend(
@@ -43,8 +44,8 @@ class AddItemActivity : AppCompatActivity() {
             thread {
                 addItem(item)
             }.join()
-//            val fragment = getFragmentManager().findFragmentById(R.id.mapFragment) as MapFragment
-//            fragment.reloadMap()
+            val fragment = getFragmentManager().findFragmentById(R.id.mapFragment) as MapFragment
+            fragment.reloadMap()
             finish()
         }
 

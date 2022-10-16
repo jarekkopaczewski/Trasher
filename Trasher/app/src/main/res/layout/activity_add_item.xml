@@ -35,11 +35,12 @@
         app:layout_constraintTop_toBottomOf="@+id/nameInput" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="98dp"
-        android:layout_height="45dp"
+        android:id="@+id/addButton"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:background="@color/correctAnswer"
-        app:cardBackgroundColor="@color/background"
+        app:cardBackgroundColor="@color/background_images"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -50,13 +51,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/button"
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#9C27B0"
-                android:text="add"
-                android:textColor="@color/white"
+                android:fontFamily="@font/signika_regular"
+                android:text="Add"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

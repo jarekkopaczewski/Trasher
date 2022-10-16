@@ -32,23 +32,29 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/signika_regular"
                 android:text="@string/app_name"
+                android:textColor="@color/textColor"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/categoryItem"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/signika_regular"
                 android:text="category"
+                android:textColor="@color/textColor"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/cardView3"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleItem" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"

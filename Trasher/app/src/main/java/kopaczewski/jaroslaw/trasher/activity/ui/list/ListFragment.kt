@@ -1,5 +1,7 @@
 package kopaczewski.jaroslaw.trasher.activity.ui.list
 
+import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -93,6 +96,7 @@ class ListFragment : Fragment() {
         currentItems.map { e -> e.category }.toSet().forEach {
             val chip = Chip(this.requireContext())
             chip.text = it
+            chip.chipBackgroundColor  = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.foreground))
             categoryNames.add(it)
             chip.isCheckable = true
             chip.isChecked = true

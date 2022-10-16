@@ -138,7 +138,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        app:cardBackgroundColor="@color/foreground"
+        app:cardBackgroundColor="@color/background_images"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">

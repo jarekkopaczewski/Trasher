@@ -2,6 +2,7 @@ package kopaczewski.jaroslaw.trasher.activity.ui.map
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -117,6 +119,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun setCategories() {
         DataLoader.currentItems.map { e -> e.category }.toSet().forEach {
             val chip = Chip(this.requireContext())
+            chip.chipBackgroundColor  = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.foreground))
             chip.text = it
             chip.isCheckable = true
             chip.isChecked = true
@@ -133,7 +136,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun reloadMap() {
-        //mMap.clear()
+        mMap.clear()
         setUser()
         addMarkers(getFilteredItems(currentCategories, itemList))
     }

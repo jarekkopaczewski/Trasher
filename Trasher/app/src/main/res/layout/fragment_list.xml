@@ -14,6 +14,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
+        app:cardBackgroundColor="@color/foreground_items"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toStartOf="@+id/categoryButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,6 @@
                 android:id="@+id/itemSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/foreground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/categoryButton"
