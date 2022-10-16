@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import kopaczewski.jaroslaw.trasher.R
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.addItem
+import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.currentItems
+import kopaczewski.jaroslaw.trasher.activity.data.Item
 import kopaczewski.jaroslaw.trasher.activity.data.ItemSend
 import kopaczewski.jaroslaw.trasher.databinding.ActivityAddItemBinding
 import kotlin.concurrent.thread
@@ -26,7 +28,7 @@ class AddItemActivity : AppCompatActivity() {
         var longitude = intent.getDoubleExtra("longitude", 45.5678)
 
         addButton.setOnClickListener {
-            var item = ItemSend(
+            val item = ItemSend(
                 name = nameInput.text.toString(),
                 latitude = latitude.toFloat(),
                 longitude = longitude.toFloat(),
@@ -40,8 +42,6 @@ class AddItemActivity : AppCompatActivity() {
                 addItem(item)
             }.join()
             finish()
-
-
         }
 
     }

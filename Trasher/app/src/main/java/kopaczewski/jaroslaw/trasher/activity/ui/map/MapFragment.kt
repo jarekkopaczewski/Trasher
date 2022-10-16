@@ -58,6 +58,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapCategoryButton: ImageView
     private lateinit var exitButton: FloatingActionButton
     private lateinit var currentCategories: List<String>
+    private var currentId: Long = 11
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,6 +87,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         detailButton.setOnClickListener {
             if (specificationView.visibility == VISIBLE) {
+                val item = itemList.filter {
+                    it.id == currentId
+                }.first()
+                DataLoader.currentItem = item
                 startActivity(Intent(requireActivity(), DetailActivity::class.java))
             }
         }
@@ -184,6 +189,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val item = itemList.filter {
                         it.id == marker.tag
                     }.first()
+                    currentId = marker.tag.toString().toLong()
 
                     if (item.image != null)
                         Picasso.get().load(getImagePath(item.image)).fit()

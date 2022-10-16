@@ -18,6 +18,7 @@ object DataLoader {
     private val TOKEN = "Token 12d2308f8b3bc3494fe9b9d0d900aeb94238f25d"
     private val JSON: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
     var currentItems: ArrayList<Item> = arrayListOf()
+    var currentItem: Item? = null
 
     fun getItems(): ArrayList<Item> {
         val client = OkHttpClient()
