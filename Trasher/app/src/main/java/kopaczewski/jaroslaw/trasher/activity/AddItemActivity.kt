@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import kopaczewski.jaroslaw.trasher.R
+import kopaczewski.jaroslaw.trasher.activity.api.DataLoader
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.addItem
 import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.currentItems
 import kopaczewski.jaroslaw.trasher.activity.data.Item
 import kopaczewski.jaroslaw.trasher.activity.data.ItemSend
+import kopaczewski.jaroslaw.trasher.activity.ui.map.MapFragment
 import kopaczewski.jaroslaw.trasher.databinding.ActivityAddItemBinding
 import kotlin.concurrent.thread
 
@@ -41,6 +43,8 @@ class AddItemActivity : AppCompatActivity() {
             thread {
                 addItem(item)
             }.join()
+//            val fragment = getFragmentManager().findFragmentById(R.id.mapFragment) as MapFragment
+//            fragment.reloadMap()
             finish()
         }
 

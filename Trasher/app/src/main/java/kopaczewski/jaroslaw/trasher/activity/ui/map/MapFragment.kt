@@ -57,7 +57,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var categoryConstraint: ConstraintLayout
     private lateinit var mapCategoryButton: ImageView
     private lateinit var exitButton: FloatingActionButton
-    private lateinit var currentCategories: List<String>
+    private var currentCategories: List<String> = listOf()
     private var currentId: Long = 11
 
     override fun onCreateView(
@@ -132,10 +132,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun reloadMap(){
-        mMap.clear()
+    fun reloadMap() {
+        //mMap.clear()
         setUser()
-        addMarkers(getFilteredItems(currentCategories  ,itemList))
+        addMarkers(getFilteredItems(currentCategories, itemList))
     }
 
     fun getFilteredItems(categories: List<String>, items: List<Item>): List<Item> {
@@ -157,9 +157,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         addMarkers(itemz)
     }
 
-    private fun addMarkers(itemz: List<Item>){
+    fun addMarkers(itemz: List<Item>) {
         itemz.forEach { item ->
-            println(itemz)
             val imageId = when (item.category) {
                 "AGD" -> R.drawable.agd
                 "Meble" -> R.drawable.furniture
@@ -207,7 +206,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun setUser(){
+    private fun setUser() {
         val user = LatLng(myLocation.latitude, myLocation.longitude)
         val zoomLevel = 13f
         val marker = mMap.addMarker(
