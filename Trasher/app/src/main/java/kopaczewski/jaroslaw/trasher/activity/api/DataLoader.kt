@@ -17,6 +17,7 @@ object DataLoader {
     private val AUTHORIZATION = "Authorization"
     private val TOKEN = "Token 12d2308f8b3bc3494fe9b9d0d900aeb94238f25d"
     private val JSON: MediaType? = "application/json; charset=utf-8".toMediaTypeOrNull()
+    var currentItems: ArrayList<Item> = arrayListOf()
 
     fun getItems(): ArrayList<Item> {
         val client = OkHttpClient()
@@ -34,7 +35,7 @@ object DataLoader {
         for ((i, _) in stringArray.withIndex()) {
             items.add(Gson().fromJson(stringArray[i].toString(), Item::class.java))
         }
-
+        currentItems = items
         return items
     }
 

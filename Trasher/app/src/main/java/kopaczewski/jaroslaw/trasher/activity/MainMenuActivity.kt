@@ -2,6 +2,7 @@ package kopaczewski.jaroslaw.trasher.activity
 
 import android.Manifest
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
