@@ -154,8 +154,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mMap.setOnMapLongClickListener { latLng ->
             if(myLocation != null){
                 val intent = Intent(requireActivity(), AddItemActivity::class.java)
-                intent.putExtra("latitude", myLocation.latitude)
-                intent.putExtra("longitude", myLocation.longitude)
+                intent.putExtra("latitude", latLng.latitude)
+                intent.putExtra("longitude", latLng.longitude)
                 startActivity(intent)
             }
         }
