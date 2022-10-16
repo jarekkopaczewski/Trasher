@@ -39,10 +39,8 @@ object DataLoader {
         return items
     }
 
-    fun addItem(){
-        val item = ItemSend("test", 43.4f, 43.4f, 11, false, "Inne", 21, 123)
+    fun addItem(item: ItemSend){
         val client = OkHttpClient()
-        println(Gson().toJson(item))
         val request =
             Request.Builder().url(GET_ITEMS).post(RequestBody.create(JSON, Gson().toJson(item))).addHeader(AUTHORIZATION, TOKEN).build()
         val response = client.newCall(request).execute().body!!.string()

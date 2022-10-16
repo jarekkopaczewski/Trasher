@@ -1,0 +1,157 @@
+Index: Trasher/.idea/deploymentTargetDropDown.xml
+===================================================================
+diff --git a/Trasher/.idea/deploymentTargetDropDown.xml b/Trasher/.idea/deploymentTargetDropDown.xml
+deleted file mode 100644
+--- a/Trasher/.idea/deploymentTargetDropDown.xml	(revision 46ae6d94188f2167c6e1e6ca08488a8d183a0e7f)
++++ /dev/null	(revision 46ae6d94188f2167c6e1e6ca08488a8d183a0e7f)
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetDropDown">
+-    <targetSelectedWithDropDown>
+-      <Target>
+-        <type value="QUICK_BOOT_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\Users\jarek\.android\avd\Pixel_3_API_29.avd" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-    </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-10-15T13:53:46.298836900Z" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/AddItemActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/AddItemActivity.kt b/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/AddItemActivity.kt
+--- a/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/AddItemActivity.kt	(revision 46ae6d94188f2167c6e1e6ca08488a8d183a0e7f)
++++ b/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/AddItemActivity.kt	(date 1665876670496)
+@@ -2,11 +2,48 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import android.widget.Button
++import android.widget.EditText
+ import kopaczewski.jaroslaw.trasher.R
++import kopaczewski.jaroslaw.trasher.activity.api.DataLoader.addItem
++import kopaczewski.jaroslaw.trasher.activity.data.ItemSend
++import kopaczewski.jaroslaw.trasher.databinding.ActivityAddItemBinding
++import kotlin.concurrent.thread
+ 
+ class AddItemActivity : AppCompatActivity() {
++    private lateinit var binding: ActivityAddItemBinding
++    private lateinit var nameInput: EditText
++    private lateinit var categoryInput: EditText
++    private lateinit var addButton: Button
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_add_item)
++        binding = ActivityAddItemBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++        nameInput = binding.nameInput
++        categoryInput = binding.categoryInput
++        addButton = binding.button
++        var latitude = 40.132432
++        var longtitude = 35.021354
++
++        addButton.setOnClickListener {
++            var item = ItemSend(
++                name = nameInput.text.toString(),
++                latitude = latitude.toFloat(),
++                longitude = longtitude.toFloat(),
++                user = 11,
++                status = false,
++                category = categoryInput.text.toString(),
++                likes = 0,
++                views = 0,
++            )
++            thread {
++                addItem(item)
++            }
++            finish()
++
++
++        }
++
+     }
++
+ }
+\ No newline at end of file
+Index: Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/api/DataLoader.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/api/DataLoader.kt b/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/api/DataLoader.kt
+--- a/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/api/DataLoader.kt	(revision 46ae6d94188f2167c6e1e6ca08488a8d183a0e7f)
++++ b/Trasher/app/src/main/java/kopaczewski/jaroslaw/trasher/activity/api/DataLoader.kt	(date 1665876098133)
+@@ -38,10 +38,8 @@
+         return items
+     }
+ 
+-    fun addItem(){
+-        val item = ItemSend("test", 43.4f, 43.4f, 11, false, "Inne", 21, 123)
++    fun addItem(item: ItemSend){
+         val client = OkHttpClient()
+-        println(Gson().toJson(item))
+         val request =
+             Request.Builder().url(GET_ITEMS).post(RequestBody.create(JSON, Gson().toJson(item))).addHeader(AUTHORIZATION, TOKEN).build()
+         val response = client.newCall(request).execute().body!!.string()
+Index: Trasher/app/src/main/res/layout/activity_add_item.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Trasher/app/src/main/res/layout/activity_add_item.xml b/Trasher/app/src/main/res/layout/activity_add_item.xml
+--- a/Trasher/app/src/main/res/layout/activity_add_item.xml	(revision 46ae6d94188f2167c6e1e6ca08488a8d183a0e7f)
++++ b/Trasher/app/src/main/res/layout/activity_add_item.xml	(date 1665874807056)
+@@ -7,4 +7,43 @@
+     android:background="@color/background"
+     tools:context=".activity.AddItemActivity">
+ 
++    <EditText
++        android:id="@+id/nameInput"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="208dp"
++        android:ems="10"
++        android:hint="name"
++        android:inputType="textPersonName"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.497"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <EditText
++        android:id="@+id/categoryInput"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="48dp"
++        android:ems="10"
++        android:hint="category"
++        android:inputType="textPersonName"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/nameInput" />
++
++    <Button
++        android:id="@+id/button"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="144dp"
++        android:background="#4CAF50"
++        android:backgroundTint="#4CAF50"
++        android:text="add"
++        android:textColor="#F4F3F3"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.498"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/categoryInput" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
