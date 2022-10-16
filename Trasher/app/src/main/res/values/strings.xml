@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Trasher</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="title_activity_maps">Trasher</string>
+    <string name="title_activity_main_menu">Trasher</string>
     <string name="title_map">Map</string>
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>

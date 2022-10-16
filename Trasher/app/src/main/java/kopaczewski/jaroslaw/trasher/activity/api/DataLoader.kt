@@ -3,7 +3,6 @@ package kopaczewski.jaroslaw.trasher.activity.api
 import com.google.gson.Gson
 import kopaczewski.jaroslaw.trasher.activity.data.Item
 import kopaczewski.jaroslaw.trasher.activity.data.ItemSend
-import kotlinx.coroutines.coroutineScope
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -21,7 +20,7 @@ object DataLoader {
     var currentItems: ArrayList<Item> = arrayListOf()
     var currentItem: Item? = null
 
-     fun getItems(): ArrayList<Item> {
+    fun getItems(): ArrayList<Item> {
         val client = OkHttpClient()
         val request =
             Request.Builder().url(GET_ITEMS).get().addHeader(AUTHORIZATION, TOKEN).build()
@@ -38,13 +37,14 @@ object DataLoader {
             items.add(Gson().fromJson(stringArray[i].toString(), Item::class.java))
         }
         currentItems = items
-         return items
+        return items
     }
 
-    fun addItem(item: ItemSend){
+    fun addItem(item: ItemSend) {
         val client = OkHttpClient()
         val request =
-            Request.Builder().url(GET_ITEMS).post(RequestBody.create(JSON, Gson().toJson(item))).addHeader(AUTHORIZATION, TOKEN).build()
+            Request.Builder().url(GET_ITEMS).post(RequestBody.create(JSON, Gson().toJson(item)))
+                .addHeader(AUTHORIZATION, TOKEN).build()
         val response = client.newCall(request).execute().body!!.string()
         println(response)
     }
