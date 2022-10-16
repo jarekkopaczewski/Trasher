@@ -11,9 +11,7 @@ class PathAndRename(object):
 
     def __call__(self, instance, filename):
         ext = filename.split('.')[-1]
-        # set filename as random string
         filename = '{}.{}'.format(uuid4().hex, ext)
-        # return the whole path to the file
         return os.path.join(self.path, filename)
 
 path_and_rename = PathAndRename("./static/images")
@@ -59,7 +57,6 @@ class Item(models.Model):
         null=True
     )
     image = models.ImageField(upload_to=path_and_rename)
-    # image = models.ImageField(upload_to=f('static/images'))
     likes = models.IntegerField(null=True)
     views = models.IntegerField(null=True)
     creation_date = models.DateTimeField(
