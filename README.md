@@ -8,7 +8,7 @@
 # O projekcie
 
 ## Opis projeku
-Koncept aplikacji opiera się na możliwości pozostawiania nieużywanych przedmiotów w okolicach pojemników na odpadki, jednocześnie umożliwiając dodanie zdjęć, opisu oraz lokalizacji na mapie. W ten sposób inni użytkownicy mogą spojrzeć na mapę ze znacznikami i zebrać pozostawione przedmioty. Ma to na celu wydłużenie żywotności posiadanych rzeczy, które mogą się komuś przydać.
+Aplikacja jest zwycięskim projektem stworzonym podczas hackatonu BEST Hacks 2022. Jej koncept opiera się na możliwości pozostawiania nieużywanych przedmiotów w okolicach pojemników na odpadki, jednocześnie umożliwiając dodanie zdjęć, opisu oraz lokalizacji na mapie. W ten sposób inni użytkownicy mogą spojrzeć na mapę ze znacznikami i zebrać pozostawione przedmioty. Ma to na celu wydłużenie żywotności posiadanych rzeczy, które mogą się komuś przydać. 
 
 ## Widok mapy
 
